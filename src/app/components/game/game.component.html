@@ -1,0 +1,21 @@
+<app-navbar></app-navbar>
+  <div class="column">
+    <app-board></app-board>
+  </div>
+
+  <div class="column">
+
+      <mat-card id="players">
+          <div>
+              <i class="material-icons">person_pin</i><p [hidden]='player1.turn' >{{player1.name}}'s turn </p>
+              <p>{{player1.current}}</p>
+          </div>
+          <h1>Vs</h1>
+          <div>
+              <i class="material-icons">person_pin</i><p  [hidden]='player2.turn' >{{player2.name}}'s turn' </p> 
+              <p>{{player2.current}}</p>
+          </div>  
+        </mat-card><br>
+    <app-dice></app-dice>
+  </div>
+

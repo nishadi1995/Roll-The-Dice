@@ -1,0 +1,10 @@
+
+<mat-card id="dice">
+    <button mat-fab color="warn" (click)='onStart()'>Start</button>
+    
+    <button mat-fab color="primary"  [disabled]="!disabled" (click)="roll()">Roll</button>
+        
+    <label for="dice" style="font-size : 35px ; font-weight: bold; padding:5px;">{{number}}</label>
+
+    
+</mat-card>
