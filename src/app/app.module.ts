@@ -12,9 +12,11 @@ import { BoardComponent } from './components/board/board.component';
 import { CanvasService } from './shared/canvas.service';
 import { DiceComponent } from './components/dice/dice.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { InitComponent } from './components/init/init.component';
 
 const routes : Routes = [
-  {path : 'game' , component: GameComponent},
+  {path : '' , component : InitComponent},
+  {path : 'game' , component : GameComponent},
 ];
 
 @NgModule({
@@ -23,7 +25,8 @@ const routes : Routes = [
     GameComponent,
     BoardComponent,
     DiceComponent,
-    NavbarComponent
+    NavbarComponent,
+    InitComponent
   ],
   imports: [
     BrowserAnimationsModule,

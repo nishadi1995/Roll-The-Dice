@@ -16,26 +16,27 @@ export class DiceComponent implements OnInit {
 
   round: number;
   number :any ;
+  gameover :boolean;
   disabled :boolean =false;
   constructor(private canvas :CanvasService ) { }
 
   ngOnInit() {}
 
   onStart(){
-    console.log('started');
+    
     this.round=0;//this give the chance to two players
     this.disabled = true;
     this.canvas.player1.turn = false;    
     this.canvas.player2.turn = true;
     
 
-      this.canvas.player1.current =0;
-      this.canvas.player1.tile = this.canvas.tiles[0];
-      this.moveDice(this.canvas.player1);
+    this.canvas.player1.current =0;
+    this.canvas.player1.tile = this.canvas.tiles[0];
+    this.moveDice(this.canvas.player1);
     
-       this.canvas.player2.current =0;
-       this.canvas.player2.tile = this.canvas.tiles[0];
-       this.moveDice(this.canvas.player2);
+    this.canvas.player2.current =0;
+    this.canvas.player2.tile = this.canvas.tiles[0];
+    this.moveDice(this.canvas.player2);
      
 
     
@@ -69,6 +70,7 @@ export class DiceComponent implements OnInit {
         console.log('Game Over');
         this.canvas.player1.current=99
         this.moveDice(this.canvas.player1);
+        this.gameover = true;
         this.disabled = false;   
         this.canvas.player1.turn = false;
         this.canvas.player2.turn = false;    //need to disable roll button
@@ -84,9 +86,9 @@ export class DiceComponent implements OnInit {
       
     
       if(this.canvas.player2.current >=100){
-        console.log('Game Over');
         this.canvas.player2.current=99
         this.moveDice(this.canvas.player2);
+        this.gameover = true;
         this.disabled = false;       //need to disable roll button
         this.canvas.player1.turn = false;
         this.canvas.player2.turn = false; 

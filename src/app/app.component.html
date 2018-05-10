@@ -1,24 +1,2 @@
-<div [hidden]="hidden">
-    <mat-card >
-        <mat-card-title>WELCOME to Snake n Ladder</mat-card-title>
-      
-        <form [formGroup] = "players">
-            <mat-form-field>
-              <input matInput placeholder="Player 1" formControlName="player1" >
-              <mat-error *ngIf="!(players.controls['player1'].valid)">Invalid Input</mat-error>
-            </mat-form-field>
-      
-            <mat-form-field>
-              <input matInput placeholder="Player 2" formControlName="player2">
-              <mat-error *ngIf="!(players.controls['player2'].valid)">Invalid Input</mat-error>
-            </mat-form-field>
-        </form>
-      
-        <button mat-raised-button color="warn" [disabled]='players.invalid' (click)="onPlay(players.value)">Play !</button>
-      
-      </mat-card>
-</div>
-
-
 <router-outlet></router-outlet>
 
