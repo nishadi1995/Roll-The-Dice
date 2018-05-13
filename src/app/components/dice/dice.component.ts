@@ -1,11 +1,12 @@
 import { Component, OnInit , Inject} from '@angular/core';
 import {  MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import {  Player } from '../../shared/models/player';
 import { CanvasService } from '../../shared/canvas.service';
 import { Tile } from '../../shared/models/tile';
-
+import { QuestionComponent} from '../../components/question/question.component'
 
 @Component({
   selector: 'app-dice',
@@ -14,11 +15,12 @@ import { Tile } from '../../shared/models/tile';
 })
 export class DiceComponent implements OnInit {
 
+
   round: number;
   number :any ;
   gameover :boolean;
   disabled :boolean =false;
-  constructor(private canvas :CanvasService ) { }
+  constructor(private canvas :CanvasService ,public dialog : MatDialog) { }
 
   ngOnInit() {}
 
@@ -57,6 +59,8 @@ export class DiceComponent implements OnInit {
   roll(){ 
     this.number =  Math.floor(Math.random() * Math.floor(6))+1;
     this.round +=1;
+
+    this.openQuestion();
 
     //player 1s turn
     if(this.round%2 ==1){
@@ -100,6 +104,15 @@ export class DiceComponent implements OnInit {
     
   }
 
-  
+  openQuestion() : void{
+    let dialogRef = this.dialog.open(QuestionComponent,{
+      width: '250px',
+    
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 
 }

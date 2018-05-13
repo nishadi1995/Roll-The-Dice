@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { MaterialModule } from './shared/material/material.module';
 import { Routes,RouterModule} from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { GameComponent } from './components/game/game.component';
@@ -13,6 +13,8 @@ import { CanvasService } from './shared/canvas.service';
 import { DiceComponent } from './components/dice/dice.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { InitComponent } from './components/init/init.component';
+import { QuestionComponent } from './components/question/question.component';
+import { QuestionService } from './shared/question.service';
 
 const routes : Routes = [
   {path : '' , component : InitComponent},
@@ -26,7 +28,8 @@ const routes : Routes = [
     BoardComponent,
     DiceComponent,
     NavbarComponent,
-    InitComponent
+    InitComponent,
+    QuestionComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -36,9 +39,11 @@ const routes : Routes = [
     RouterModule.forRoot(routes),
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [CanvasService],
+  entryComponents: [QuestionComponent,DiceComponent],
+  providers: [CanvasService,QuestionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

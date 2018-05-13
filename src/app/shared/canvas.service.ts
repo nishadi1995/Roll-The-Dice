@@ -25,4 +25,8 @@ export class CanvasService {
     this.player2 = new Player(name2 , '#4A148C');
     this.round =0;
   }
+
+  openQuestion(){
+    
+  }
 }

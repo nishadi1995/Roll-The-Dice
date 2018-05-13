@@ -4,12 +4,12 @@
     
       <form [formGroup] = "players">
           <mat-form-field>
-            <input matInput placeholder="Player 1" formControlName="player1" >
+            <input matInput placeholder="Player 1" formControlName="player1"  >
             <mat-error *ngIf="!(players.controls['player1'].valid)">Invalid Input</mat-error>
           </mat-form-field>
     
           <mat-form-field>
-            <input matInput placeholder="Player 2" formControlName="player2">
+            <input matInput placeholder="Player 2" formControlName="player2" >
             <mat-error *ngIf="!(players.controls['player2'].valid)">Invalid Input</mat-error>
           </mat-form-field>
       </form>

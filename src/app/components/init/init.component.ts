@@ -20,6 +20,7 @@ export class InitComponent implements OnInit {
       player2 : [null , Validators.required]
     });
    }
+   
    ngOnInit(){}
 
   onPlay(players){
