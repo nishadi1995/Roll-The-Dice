@@ -1,6 +1,7 @@
 import { Component, OnInit ,Inject} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { QuestionService, Question } from '../../shared/question.service';
+
+import { QuestionService, question } from '../../shared/question.service';
 
 @Component({
   selector: 'app-question',
@@ -12,25 +13,18 @@ import { QuestionService, Question } from '../../shared/question.service';
 export class QuestionComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<QuestionComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Question , private qtnService: QuestionService) {}
+    @Inject(MAT_DIALOG_DATA) public data: any , private qtnService: QuestionService) {}
+
+  answer:string
+
+  ngOnInit(){}
 
   
-  ngOnInit(){
-    this.getQuestion();
-    console.log(this.data)
-  }
-
-  onNoClick(): void {
+  onSubmit(){
+    if(this.answer == this.data.answer){
+      this.qtnService.correctAnswer = true;
+    }
     this.dialogRef.close();
   }
-
-  getQuestion(){
-    this.qtnService.getQuestion().
-    subscribe(
-      data=>{this.data = data}
-    );
-  }
-
-  
 
 }

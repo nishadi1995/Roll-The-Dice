@@ -1,12 +1,13 @@
 import { Component, OnInit , Inject} from '@angular/core';
 import {  MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import {  Player } from '../../shared/models/player';
 import { CanvasService } from '../../shared/canvas.service';
 import { Tile } from '../../shared/models/tile';
 import { QuestionComponent} from '../../components/question/question.component'
+import { QuestionService, question } from '../../shared/question.service';
 
 @Component({
   selector: 'app-dice',
@@ -15,12 +16,12 @@ import { QuestionComponent} from '../../components/question/question.component'
 })
 export class DiceComponent implements OnInit {
 
-
+  questionData : any;
   round: number;
   number :any ;
   gameover :boolean;
   disabled :boolean =false;
-  constructor(private canvas :CanvasService ,public dialog : MatDialog) { }
+  constructor(private canvas :CanvasService, private qtnService : QuestionService, public dialog : MatDialog) { }
 
   ngOnInit() {}
 
@@ -38,10 +39,7 @@ export class DiceComponent implements OnInit {
     
     this.canvas.player2.current =0;
     this.canvas.player2.tile = this.canvas.tiles[0];
-    this.moveDice(this.canvas.player2);
-     
-
-    
+    this.moveDice(this.canvas.player2);  
   }
 
   moveDice(player:Player){
@@ -64,12 +62,11 @@ export class DiceComponent implements OnInit {
 
     //player 1s turn
     if(this.round%2 ==1){
-      this.canvas.tiles[this.canvas.player1.current].draw(this.canvas.getCanvas());
-      this.canvas.player1.current +=this.number;
       this.canvas.player1.turn = true;
       this.canvas.player2.turn = false;
+      this.canvas.tiles[this.canvas.player1.current].draw(this.canvas.getCanvas());
+      this.canvas.player1.current +=this.number;
 
-    
       if(this.canvas.player1.current >=100){
         console.log('Game Over');
         this.canvas.player1.current=99
@@ -79,15 +76,18 @@ export class DiceComponent implements OnInit {
         this.canvas.player1.turn = false;
         this.canvas.player2.turn = false;    //need to disable roll button
         this.number = "Game Over!"
-      }else{
+      }else if(this.qtnService.correctAnswer){
         this.moveDice(this.canvas.player1);
+      }else{
+        //this.canvas.player1.current -=this.number;
+        //this.moveDice(this.canvas.player1);
       }
+
     }else{
-      this.canvas.tiles[this.canvas.player2.current].draw(this.canvas.getCanvas());
-      this.canvas.player2.current +=this.number;
       this.canvas.player1.turn = false;
       this.canvas.player2.turn = true;
-      
+      this.canvas.tiles[this.canvas.player2.current].draw(this.canvas.getCanvas());
+      this.canvas.player2.current +=this.number;
     
       if(this.canvas.player2.current >=100){
         this.canvas.player2.current=99
@@ -97,22 +97,44 @@ export class DiceComponent implements OnInit {
         this.canvas.player1.turn = false;
         this.canvas.player2.turn = false; 
         this.number = "Game Over!"
-      }else{
+      }else if(this.qtnService.correctAnswer){
         this.moveDice(this.canvas.player2);
+      }else{
+        //this.canvas.player1.current -=this.number;
+        //this.moveDice(this.canvas.player2);
       }
     }
     
   }
 
   openQuestion() : void{
+
+    let number = (Math.floor((Math.random() * 10) + 1));
+
+    this.qtnService.getQuestion().
+    subscribe(
+      data=>{
+        this.questionData = data
+        console.log(this.questionData[0]);
+      }
+    );
+
     let dialogRef = this.dialog.open(QuestionComponent,{
-      width: '250px',
-    
+      width: '500px',
+      data : {
+        question: this.questionData[0].question,
+        options : this.questionData[0].options,
+        answer : this.questionData[0].answer
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+  }
+
+  getQuestion(){
+    
   }
 
 }
