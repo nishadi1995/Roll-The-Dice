@@ -1,7 +1,5 @@
 import { Component, OnInit , Inject} from '@angular/core';
-import {  MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, throwMatDialogContentAlreadyAttachedError } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
 
 import {  Player } from '../../shared/models/player';
 import { CanvasService } from '../../shared/canvas.service';
@@ -21,7 +19,8 @@ export class DiceComponent implements OnInit {
   number :any ;
   gameover :boolean;
   disabled :boolean =false;
-  constructor(private canvas :CanvasService, private qtnService : QuestionService, public dialog : MatDialog) { }
+  constructor(private canvas :CanvasService, private qtnService : QuestionService,
+     public dialog : MatDialog, public snackbar : MatSnackBar) { }
 
   ngOnInit() {}
 
@@ -29,8 +28,8 @@ export class DiceComponent implements OnInit {
     
     this.round=1;//this give the chance to two players
     this.disabled = true;
-    this.canvas.player1.turn = false;    
-    this.canvas.player2.turn = true;
+    this.canvas.player1.turn = true;    
+    this.canvas.player2.turn = false;
     
 
     this.canvas.player1.current =0;
@@ -60,15 +59,19 @@ export class DiceComponent implements OnInit {
     this.number = number;
 
     if(this.round%2 == 1){//player 1
-      this.play(number,this.canvas.player1,this.canvas.player2);
+      this.play(number,this.canvas.player1);
+      this.canvas.player1.turn = true;    
+      this.canvas.player2.turn = false;
     }else{//player 2
-      this.play(number,this.canvas.player2,this.canvas.player2);
+      this.play(number,this.canvas.player2);
+      this.canvas.player1.turn = false;    
+      this.canvas.player2.turn = true;
       
     }
     //after everything
   }
 
-  play(number,player,opponant){
+  play(number,player){
 
     let no = (Math.floor((Math.random() * 10) +1));
     //question pop up
@@ -86,7 +89,10 @@ export class DiceComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result=>{
           if(result == datas[no].answer){
             //answer is correct dice up
-            this.canvas.tiles[player.current].draw(this.canvas.getCanvas());//clean the cirrent tile.
+            this.snackbar.open('Answer is Correct', '', {
+              duration: 2000
+            });
+            this.canvas.tiles[player.current].draw(this.canvas.getCanvas());//clean the current tile.
             player.current += number;
 
             //check wheher the current is 99 --> 100th tile
@@ -100,14 +106,14 @@ export class DiceComponent implements OnInit {
 
             //next player's chance
             this.round +=1;
-            player.turn = true;
-            opponant.turn = false;
+            
             
           }else{
+            //answer is incorrect.No move up. next player
+            this.snackbar.open('Answer is Incorrect', '', {
+              duration: 2000
+            });
             this.round +=1;
-            player.turn = false;
-            opponant.turn = true;
-            //answer is incorrect next player
 
           }
         })

@@ -9,7 +9,7 @@
           <div>
               <img src="../../../assets/images/user.png" alt="">
               <strong >{{player1.name}}</strong>
-              <mat-chip-list  [hidden]='player1.turn'>
+              <mat-chip-list  [hidden]='!player1.turn'>
                     <mat-chip color="warn" selected="true">your turn </mat-chip>
               </mat-chip-list>
               <p>{{player1.current}}</p>
@@ -18,7 +18,7 @@
           <div>
                 <img src="../../../assets/images/user.png" alt="">
                 <strong>{{player2.name}}</strong>
-                <mat-chip-list [hidden]='player2.turn'>
+                <mat-chip-list [hidden]='!player2.turn'>
                     <mat-chip  color="warn" selected="true" >your turn </mat-chip> 
                 </mat-chip-list>
               <p>{{player2.current}}</p>
