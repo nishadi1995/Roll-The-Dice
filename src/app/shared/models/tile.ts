@@ -22,7 +22,7 @@ export class Tile {
 
     }
 
-    draw(ctx:CanvasRenderingContext2D ){
+    draw(ctx:CanvasRenderingContext2D ){//draw the tile
         ctx.fillStyle=this.color;
         ctx.fillRect(this.x, this.y, this.wh, this.wh);
         ctx.fillStyle='#111111';

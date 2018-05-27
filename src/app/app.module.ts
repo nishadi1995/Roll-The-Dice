@@ -17,8 +17,20 @@ import { QuestionComponent } from './components/question/question.component';
 import { QuestionService } from './shared/question.service';
 
 const routes : Routes = [
-  {path : '' , component : InitComponent},
-  {path : 'game' , component : GameComponent},
+  {
+    path       : '',
+    component : InitComponent
+  },
+  
+  {
+  path : 'game' ,
+  component : GameComponent
+  },
+  {
+      path       : '',
+      redirectTo : '',
+      pathMatch  : 'full'
+    }
 ];
 
 @NgModule({
@@ -40,7 +52,7 @@ const routes : Routes = [
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   entryComponents: [QuestionComponent,DiceComponent],
   providers: [CanvasService,QuestionService],

@@ -1,7 +1,7 @@
 import { Component, OnInit , Inject} from '@angular/core';
 import {  MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, throwMatDialogContentAlreadyAttachedError } from '@angular/material';
 
 import {  Player } from '../../shared/models/player';
 import { CanvasService } from '../../shared/canvas.service';
@@ -16,7 +16,7 @@ import { QuestionService, question } from '../../shared/question.service';
 })
 export class DiceComponent implements OnInit {
 
-  questionData : any;
+  questionData :any =[];
   round: number;
   number :any ;
   gameover :boolean;
@@ -27,7 +27,7 @@ export class DiceComponent implements OnInit {
 
   onStart(){
     
-    this.round=0;//this give the chance to two players
+    this.round=1;//this give the chance to two players
     this.disabled = true;
     this.canvas.player1.turn = false;    
     this.canvas.player2.turn = true;
@@ -54,87 +54,69 @@ export class DiceComponent implements OnInit {
     ctx.fill();
   }
 
-  roll(){ 
-    this.number =  Math.floor(Math.random() * Math.floor(6))+1;
-    this.round +=1;
+  roll(){
+    //generate random number from the dice
+    let number = Math.floor(Math.random() * Math.floor(6))+1;
+    this.number = number;
 
-    this.openQuestion();
-
-    //player 1s turn
-    if(this.round%2 ==1){
-      this.canvas.player1.turn = true;
-      this.canvas.player2.turn = false;
-      this.canvas.tiles[this.canvas.player1.current].draw(this.canvas.getCanvas());
-      this.canvas.player1.current +=this.number;
-
-      if(this.canvas.player1.current >=100){
-        console.log('Game Over');
-        this.canvas.player1.current=99
-        this.moveDice(this.canvas.player1);
-        this.gameover = true;
-        this.disabled = false;   
-        this.canvas.player1.turn = false;
-        this.canvas.player2.turn = false;    //need to disable roll button
-        this.number = "Game Over!"
-      }else if(this.qtnService.correctAnswer){
-        this.moveDice(this.canvas.player1);
-      }else{
-        //this.canvas.player1.current -=this.number;
-        //this.moveDice(this.canvas.player1);
-      }
-
-    }else{
-      this.canvas.player1.turn = false;
-      this.canvas.player2.turn = true;
-      this.canvas.tiles[this.canvas.player2.current].draw(this.canvas.getCanvas());
-      this.canvas.player2.current +=this.number;
-    
-      if(this.canvas.player2.current >=100){
-        this.canvas.player2.current=99
-        this.moveDice(this.canvas.player2);
-        this.gameover = true;
-        this.disabled = false;       //need to disable roll button
-        this.canvas.player1.turn = false;
-        this.canvas.player2.turn = false; 
-        this.number = "Game Over!"
-      }else if(this.qtnService.correctAnswer){
-        this.moveDice(this.canvas.player2);
-      }else{
-        //this.canvas.player1.current -=this.number;
-        //this.moveDice(this.canvas.player2);
-      }
+    if(this.round%2 == 1){//player 1
+      this.play(number,this.canvas.player1,this.canvas.player2);
+    }else{//player 2
+      this.play(number,this.canvas.player2,this.canvas.player2);
+      
     }
-    
+    //after everything
   }
 
-  openQuestion() : void{
+  play(number,player,opponant){
 
-    let number = (Math.floor((Math.random() * 10) + 1));
+    let no = (Math.floor((Math.random() * 10) +1));
+    //question pop up
+    this.qtnService.getQuestion().subscribe(
+      datas=>{
+        console.log(datas);
+        let dialogRef = this.dialog.open(QuestionComponent,{
+          width : '500px',
+          data  : {
+            question : datas[no].question,
+            options  : datas[no].options,
+          }
+        });
 
-    this.qtnService.getQuestion().
-    subscribe(
-      data=>{
-        this.questionData = data
-        console.log(this.questionData[0]);
-      }
-    );
+        dialogRef.afterClosed().subscribe(result=>{
+          if(result == datas[no].answer){
+            //answer is correct dice up
+            this.canvas.tiles[player.current].draw(this.canvas.getCanvas());//clean the cirrent tile.
+            player.current += number;
 
-    let dialogRef = this.dialog.open(QuestionComponent,{
-      width: '500px',
-      data : {
-        question: this.questionData[0].question,
-        options : this.questionData[0].options,
-        answer : this.questionData[0].answer
-      }
-    });
+            //check wheher the current is 99 --> 100th tile
+            if(player.current >= 99){
+              player.current == 99;
+              this.gameover = true;
+              this.number = 'Game Over';
+            }
+            this.moveDice(player); // draw the dice on current tile
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
 
-  getQuestion(){
-    
+            //next player's chance
+            this.round +=1;
+            player.turn = true;
+            opponant.turn = false;
+            
+          }else{
+            this.round +=1;
+            player.turn = false;
+            opponant.turn = true;
+            //answer is incorrect next player
+
+          }
+        })
+
+
+
+    //question service ends here
+     });
   }
 
 }
+    

@@ -7,6 +7,7 @@ import { QuestionService, question } from '../../shared/question.service';
   selector: 'app-question',
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.css']
+  
 })
 
 
@@ -17,14 +18,16 @@ export class QuestionComponent implements OnInit {
 
   answer:string
 
-  ngOnInit(){}
+  ngOnInit(){
+    console.log(this.data);
+  }
 
   
   onSubmit(){
     if(this.answer == this.data.answer){
       this.qtnService.correctAnswer = true;
     }
-    this.dialogRef.close();
+    this.dialogRef.close(this.answer);
   }
 
 }
