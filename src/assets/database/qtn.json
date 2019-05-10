@@ -1,113 +1,52 @@
 [
-    {
-        "question": "1 + 7 = ?",
-        "options": [
-            "10",
-            "11",
-            "12",
-            "13"
-        ],
-        "answer": "12"
-    },
-    {
-        "question": "2 - 8 = ?",
-        "options": [
-            "1",
-            "2",
-            "3",
-            "4"
-        ],
-        "answer": "4"
-    },
-    {
-        "question": "3 + 7 = ?",
-        "options": [
-            "10",
-            "11",
-            "12",
-            "13"
-        ],
-        "answer": "12"
-    },
-    {
-        "question": "4 + 7 = ?",
-        "options": [
-            "10",
-            "11",
-            "12",
-            "13"
-        ],
-        "answer": "12"
-    },
-    {
-        "question": "5 + 7 = ?",
-        "options": [
-            "10",
-            "11",
-            "12",
-            "13"
-        ],
-        "answer": "12"
-    },
-    {
-        "question": "6 + 7 = ?",
-        "options": [
-            "10",
-            "11",
-            "12",
-            "13"
-        ],
-        "answer": "12"
-    },
-    {
-        "question": "7 + 7 = ?",
-        "options": [
-            "10",
-            "11",
-            "12",
-            "13"
-        ],
-        "answer": "12"
-    },
-    {
-        "question": "8 + 7 = ?",
-        "options": [
-            "10",
-            "11",
-            "12",
-            "13"
-        ],
-        "answer": "12"
-    },
-    {
-        "question": "9 + 7 = ?",
-        "options": [
-            "10",
-            "11",
-            "12",
-            "13"
-        ],
-        "answer": "12"
-    },
-    {
-        "question": "10 + 7 = ?",
-        "options": [
-            "10",
-            "11",
-            "12",
-            "13"
-        ],
-        "answer": "12"
-    },
-    {
-        "question": "10 + 7 = ?",
-        "options": [
-            "10",
-            "11",
-            "12",
-            "13"
-        ],
-        "answer": "12"
-    }
-
+  {
+    "question": "Which financial statement displays the revenues and expenses of a company for a period of time?",
+    "options": [
+      "a)income statement",
+      "b)balance sheet",
+      "c)cash flow statement",
+      "d)statement of stockholders equity"
+    ],
+    "answer": "Answer: a The income statement displays all revenues and expenses recorded in a period in a single report"
+  },
+  {
+    "question": "What is the main purpose of financial accounting?",
+    "options": [
+      "a)organize financial information",
+      "b)provide useful, financial information to outside",
+      "c)keep track of company expenses",
+      "d)minimize company taxes"
+    ],
+    "answer": "Answer : bThe purpose of financial accounting is to provide useful information for outside investors, creditors, and others."
+  },
+  {
+    "question": " Which of these is not included as a separate item in the basic accounting equation?",
+    "options": [
+      "a)assets",
+      "b)revenue",
+      "c)liabilities",
+      "d)stakeholders equity"
+    ],
+    "answer": "Answer : b Revenues are not included in the basic accounting equation. Assets = Liabilities + Owner’s Equity."
+  },
+  {
+    "question": "Which financial statement uses the expanded accounting equation?",
+    "options": [
+      "a)income statement",
+      "b)balance sheet",
+      "c)cash flow statement",
+      "d)statement of stockholders equity"
+    ],
+    "answer": "Answer : b  The balance sheet uses the expanded accounting equation to list assets, liabilities, and equity in a report format. "
+  },
+  {
+    "question": "The accrual basis of accounting records revenues when they are:",
+    "options": [
+      "a)collected",
+      "b)earned",
+      "c)contracted",
+      "d)readily available for use"
+    ],
+    "answer": "Answer : b The accrual basis of accounting only records income when it is earned"
+  }
 ]

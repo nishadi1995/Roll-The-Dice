@@ -1,33 +1,43 @@
 <app-navbar></app-navbar>
-<div class="container">
+<div
+  class="container"
+  style="display: flex;
+justify-content: space-between;
+display: -webkit-flex; /* for Safari */
+-webkit-justify-content: space-between; /* for Safari 6.1+ */ "
+>
+  <div class="col-sm-6">
     <app-board></app-board>
-</div>
-<app-board></app-board>
-
-<div>
-  <div class="column">
-<!--
-      <mat-card id="players">
-          <div>
-              <img src="../../../assets/images/user.png" alt="">
-              <strong >{{player1.name}}</strong>
-              <mat-chip-list  [hidden]='!player1.turn'>
-                    <mat-chip color="warn" selected="true">your turn </mat-chip>
-              </mat-chip-list>
-              <p>{{player1.current}}</p>
-          </div>
-          <h1>Vs</h1>
-          <div>
-                <img src="../../../assets/images/user.png" alt="">
-                <strong>{{player2.name}}</strong>
-                <mat-chip-list [hidden]='!player2.turn'>
-                    <mat-chip  color="warn" selected="true" >your turn </mat-chip>
-                </mat-chip-list>
-              <p>{{player2.current}}</p>
-          </div>
-        </mat-card><br>
-    <app-dice></app-dice>
-        -->
-
   </div>
 
+  <div class="container">
+    <mat-card
+      id="players"
+      style="display: flex;
+    justify-content: space-between;
+    display: -webkit-flex; /* for Safari */
+    -webkit-justify-content: space-between; /* for Safari 6.1+ */ "
+    >
+      <div class="col-sm-2">
+        <img src="../../../assets/images/user.png" alt="" />
+        <strong>{{ player1.name }}</strong>
+        <mat-chip-list [hidden]="!player1.turn">
+          <mat-chip color="warn" selected="true">your turn </mat-chip>
+        </mat-chip-list>
+        <p>{{ player1.current }}</p>
+      </div>
+      <h1>Vs</h1>
+      <div class="col-sm-2">
+        <img src="../../../assets/images/user.png" alt="" />
+        <strong>{{ player2.name }}</strong>
+        <mat-chip-list [hidden]="!player2.turn">
+          <mat-chip color="warn" selected="true">your turn </mat-chip>
+        </mat-chip-list>
+        <p>{{ player2.current }}</p>
+      </div> </mat-card
+    ><br />
+  </div>
+  <div class="col-sm-2">
+    <app-dice></app-dice>
+  </div>
+</div>

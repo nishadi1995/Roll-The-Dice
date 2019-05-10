@@ -21,7 +21,7 @@ const routes : Routes = [
     path       : '',
     component : InitComponent
   },
-  
+
   {
   path : 'game' ,
   component : GameComponent
